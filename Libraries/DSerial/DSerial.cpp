@@ -47,6 +47,7 @@ int readPacket(Stream &s, char *buffer){
       if (rc != END) {
         if(rc == ESC) { // next char was greater than 0x7F, add 0x80 to it.
           escape_next = 1;
+          data_parity ^= ESC ^ 0x80;
         } else {
           buf[index] = rc | (escape_next << 7);
           escape_next = 0;
